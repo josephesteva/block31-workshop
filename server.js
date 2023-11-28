@@ -15,13 +15,15 @@ app.get('/api/v1/pets', (req, res) => {
 	res.send(petsData)
 });
 
+app.get('/api/v1/pets/owner', (req, res) => {
+	const petOwner= req.query.owner;
+	const filtered = petsData.filter((pet) => pet.owner.toLowerCase() === petOwner.toLocaleLowerCase())
+	res.send(filtered)
+})
+
 app.get('/api/v1/pets/:name', (req, res) => {
 	const petName = req.params.name;
-	const singlePet = petsData.find((pet) => {
-		if (pet.name === petName) {
-			return true;
-		}
-	})
+	const singlePet = petsData.find((pet) => pet.name.toLowerCase() === petName.toLowerCase())
 	res.send(singlePet);
 });
 
